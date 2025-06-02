@@ -1,0 +1,192 @@
+19:57:57 **** Incremental Build of configuration Debug for project 001_BOOTLOADER_FIRST_PROJECT ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F303xE -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:88:14: warning: unused variable 'my_message' [-Wunused-variable]
+   88 |         char my_message[] = "Test mesaji...\n";
+      |              ^~~~~~~~~~
+arm-none-eabi-gcc -o "001_BOOTLOADER_FIRST_PROJECT.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/hasantayfur/STM32CubeIDE/workspace_1.18.1/001_BOOTLOADER_FIRST_PROJECT/STM32F303RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="001_BOOTLOADER_FIRST_PROJECT.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 001_BOOTLOADER_FIRST_PROJECT.elf
+ 
+arm-none-eabi-size  001_BOOTLOADER_FIRST_PROJECT.elf 
+arm-none-eabi-objdump -h -S 001_BOOTLOADER_FIRST_PROJECT.elf  > "001_BOOTLOADER_FIRST_PROJECT.list"
+arm-none-eabi-objcopy  -O ihex 001_BOOTLOADER_FIRST_PROJECT.elf  "001_BOOTLOADER_FIRST_PROJECT.hex"
+   text	   data	    bss	    dec	    hex	filename
+  15320	     92	   2076	  17488	   4450	001_BOOTLOADER_FIRST_PROJECT.elf
+Finished building: default.size.stdout
+ 
+Finished building: 001_BOOTLOADER_FIRST_PROJECT.hex
+ 
+Finished building: 001_BOOTLOADER_FIRST_PROJECT.list
+ 
+19:58:30 **** Incremental Build of configuration Debug for project 001_BOOTLOADER_FIRST_PROJECT ****
+make -j7 all 
+arm-none-eabi-size  001_BOOTLOADER_FIRST_PROJECT.elf 
+   text	   data	    bss	    dec	    hex	filename
+  15320	     92	   2076	  17488	   4450	001_BOOTLOADER_FIRST_PROJECT.elf
+Finished building: default.size.stdout
+ 
+20:04:43 **** Incremental Build of configuration Debug for project 001_BOOTLOADER_FIRST_PROJECT ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F303xE -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "001_BOOTLOADER_FIRST_PROJECT.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/hasantayfur/STM32CubeIDE/workspace_1.18.1/001_BOOTLOADER_FIRST_PROJECT/STM32F303RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="001_BOOTLOADER_FIRST_PROJECT.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 001_BOOTLOADER_FIRST_PROJECT.elf
+ 
+arm-none-eabi-size  001_BOOTLOADER_FIRST_PROJECT.elf 
+arm-none-eabi-objdump -h -S 001_BOOTLOADER_FIRST_PROJECT.elf  > "001_BOOTLOADER_FIRST_PROJECT.list"
+arm-none-eabi-objcopy  -O ihex 001_BOOTLOADER_FIRST_PROJECT.elf  "001_BOOTLOADER_FIRST_PROJECT.hex"
+   text	   data	    bss	    dec	    hex	filename
+  12700	     12	   1740	  14452	   3874	001_BOOTLOADER_FIRST_PROJECT.elf
+Finished building: default.size.stdout
+ 
+Finished building: 001_BOOTLOADER_FIRST_PROJECT.hex
+ 
+Finished building: 001_BOOTLOADER_FIRST_PROJECT.list
+ 
+20:05:11 **** Incremental Build of configuration Debug for project 001_BOOTLOADER_FIRST_PROJECT ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F303xE -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:88:14: warning: unused variable 'my_message' [-Wunused-variable]
+   88 |         char my_message[] = "Test mesaji...\n";
+      |              ^~~~~~~~~~
+arm-none-eabi-gcc -o "001_BOOTLOADER_FIRST_PROJECT.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/hasantayfur/STM32CubeIDE/workspace_1.18.1/001_BOOTLOADER_FIRST_PROJECT/STM32F303RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="001_BOOTLOADER_FIRST_PROJECT.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 001_BOOTLOADER_FIRST_PROJECT.elf
+ 
+arm-none-eabi-size  001_BOOTLOADER_FIRST_PROJECT.elf 
+arm-none-eabi-objdump -h -S 001_BOOTLOADER_FIRST_PROJECT.elf  > "001_BOOTLOADER_FIRST_PROJECT.list"
+arm-none-eabi-objcopy  -O ihex 001_BOOTLOADER_FIRST_PROJECT.elf  "001_BOOTLOADER_FIRST_PROJECT.hex"
+   text	   data	    bss	    dec	    hex	filename
+  15380	     92	   2076	  17548	   448c	001_BOOTLOADER_FIRST_PROJECT.elf
+Finished building: default.size.stdout
+ 
+Finished building: 001_BOOTLOADER_FIRST_PROJECT.hex
+ 
+Finished building: 001_BOOTLOADER_FIRST_PROJECT.list
+ 
+20:05:41 **** Incremental Build of configuration Debug for project 001_BOOTLOADER_FIRST_PROJECT ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F303xE -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:88:14: warning: unused variable 'my_message' [-Wunused-variable]
+   88 |         char my_message[] = "Test mesaji...\n";
+      |              ^~~~~~~~~~
+arm-none-eabi-gcc -o "001_BOOTLOADER_FIRST_PROJECT.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/hasantayfur/STM32CubeIDE/workspace_1.18.1/001_BOOTLOADER_FIRST_PROJECT/STM32F303RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="001_BOOTLOADER_FIRST_PROJECT.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 001_BOOTLOADER_FIRST_PROJECT.elf
+ 
+arm-none-eabi-size  001_BOOTLOADER_FIRST_PROJECT.elf 
+arm-none-eabi-objdump -h -S 001_BOOTLOADER_FIRST_PROJECT.elf  > "001_BOOTLOADER_FIRST_PROJECT.list"
+arm-none-eabi-objcopy  -O ihex 001_BOOTLOADER_FIRST_PROJECT.elf  "001_BOOTLOADER_FIRST_PROJECT.hex"
+   text	   data	    bss	    dec	    hex	filename
+  15380	     92	   2076	  17548	   448c	001_BOOTLOADER_FIRST_PROJECT.elf
+Finished building: default.size.stdout
+ 
+Finished building: 001_BOOTLOADER_FIRST_PROJECT.hex
+ 
+Finished building: 001_BOOTLOADER_FIRST_PROJECT.list
+ 
+20:06:33 **** Incremental Build of configuration Debug for project 001_BOOTLOADER_FIRST_PROJECT ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F303xE -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:90:14: warning: unused variable 'my_message' [-Wunused-variable]
+   90 |         char my_message[] = "Test mesaji...\n";
+      |              ^~~~~~~~~~
+arm-none-eabi-gcc -o "001_BOOTLOADER_FIRST_PROJECT.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/hasantayfur/STM32CubeIDE/workspace_1.18.1/001_BOOTLOADER_FIRST_PROJECT/STM32F303RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="001_BOOTLOADER_FIRST_PROJECT.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 001_BOOTLOADER_FIRST_PROJECT.elf
+ 
+arm-none-eabi-size  001_BOOTLOADER_FIRST_PROJECT.elf 
+arm-none-eabi-objdump -h -S 001_BOOTLOADER_FIRST_PROJECT.elf  > "001_BOOTLOADER_FIRST_PROJECT.list"
+arm-none-eabi-objcopy  -O ihex 001_BOOTLOADER_FIRST_PROJECT.elf  "001_BOOTLOADER_FIRST_PROJECT.hex"
+   text	   data	    bss	    dec	    hex	filename
+  15404	     92	   2076	  17572	   44a4	001_BOOTLOADER_FIRST_PROJECT.elf
+Finished building: default.size.stdout
+ 
+Finished building: 001_BOOTLOADER_FIRST_PROJECT.hex
+ 
+Finished building: 001_BOOTLOADER_FIRST_PROJECT.list
+ 
+20:07:06 **** Incremental Build of configuration Debug for project 001_BOOTLOADER_FIRST_PROJECT ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F303xE -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:90:14: warning: unused variable 'my_message' [-Wunused-variable]
+   90 |         char my_message[] = "Test mesaji...\n";
+      |              ^~~~~~~~~~
+arm-none-eabi-gcc -o "001_BOOTLOADER_FIRST_PROJECT.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/hasantayfur/STM32CubeIDE/workspace_1.18.1/001_BOOTLOADER_FIRST_PROJECT/STM32F303RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="001_BOOTLOADER_FIRST_PROJECT.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 001_BOOTLOADER_FIRST_PROJECT.elf
+ 
+arm-none-eabi-size  001_BOOTLOADER_FIRST_PROJECT.elf 
+arm-none-eabi-objdump -h -S 001_BOOTLOADER_FIRST_PROJECT.elf  > "001_BOOTLOADER_FIRST_PROJECT.list"
+arm-none-eabi-objcopy  -O ihex 001_BOOTLOADER_FIRST_PROJECT.elf  "001_BOOTLOADER_FIRST_PROJECT.hex"
+   text	   data	    bss	    dec	    hex	filename
+  15412	     92	   2076	  17580	   44ac	001_BOOTLOADER_FIRST_PROJECT.elf
+Finished building: default.size.stdout
+ 
+Finished building: 001_BOOTLOADER_FIRST_PROJECT.hex
+ 
+Finished building: 001_BOOTLOADER_FIRST_PROJECT.list
+ 
+20:07:54 **** Incremental Build of configuration Debug for project 001_BOOTLOADER_FIRST_PROJECT ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F303xE -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:90:14: warning: unused variable 'my_message' [-Wunused-variable]
+   90 |         char my_message[] = "Test mesaji...\n";
+      |              ^~~~~~~~~~
+arm-none-eabi-gcc -o "001_BOOTLOADER_FIRST_PROJECT.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/hasantayfur/STM32CubeIDE/workspace_1.18.1/001_BOOTLOADER_FIRST_PROJECT/STM32F303RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="001_BOOTLOADER_FIRST_PROJECT.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 001_BOOTLOADER_FIRST_PROJECT.elf
+ 
+arm-none-eabi-size  001_BOOTLOADER_FIRST_PROJECT.elf 
+arm-none-eabi-objdump -h -S 001_BOOTLOADER_FIRST_PROJECT.elf  > "001_BOOTLOADER_FIRST_PROJECT.list"
+arm-none-eabi-objcopy  -O ihex 001_BOOTLOADER_FIRST_PROJECT.elf  "001_BOOTLOADER_FIRST_PROJECT.hex"
+   text	   data	    bss	    dec	    hex	filename
+  15412	     92	   2076	  17580	   44ac	001_BOOTLOADER_FIRST_PROJECT.elf
+Finished building: default.size.stdout
+ 
+Finished building: 001_BOOTLOADER_FIRST_PROJECT.hex
+ 
+Finished building: 001_BOOTLOADER_FIRST_PROJECT.list
+ 
+20:08:16 **** Incremental Build of configuration Debug for project 001_BOOTLOADER_FIRST_PROJECT ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F303xE -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:90:14: warning: unused variable 'my_message' [-Wunused-variable]
+   90 |         char my_message[] = "Test mesaji...\n";
+      |              ^~~~~~~~~~
+arm-none-eabi-gcc -o "001_BOOTLOADER_FIRST_PROJECT.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/hasantayfur/STM32CubeIDE/workspace_1.18.1/001_BOOTLOADER_FIRST_PROJECT/STM32F303RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="001_BOOTLOADER_FIRST_PROJECT.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 001_BOOTLOADER_FIRST_PROJECT.elf
+ 
+arm-none-eabi-size  001_BOOTLOADER_FIRST_PROJECT.elf 
+arm-none-eabi-objdump -h -S 001_BOOTLOADER_FIRST_PROJECT.elf  > "001_BOOTLOADER_FIRST_PROJECT.list"
+arm-none-eabi-objcopy  -O ihex 001_BOOTLOADER_FIRST_PROJECT.elf  "001_BOOTLOADER_FIRST_PROJECT.hex"
+   text	   data	    bss	    dec	    hex	filename
+  15416	     92	   2076	  17584	   44b0	001_BOOTLOADER_FIRST_PROJECT.elf
+Finished building: default.size.stdout
+ 
+Finished building: 001_BOOTLOADER_FIRST_PROJECT.hex
+ 
+Finished building: 001_BOOTLOADER_FIRST_PROJECT.list
+ 
+20:09:25 **** Incremental Build of configuration Debug for project 001_BOOTLOADER_FIRST_PROJECT ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F303xE -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:92:14: warning: unused variable 'my_message' [-Wunused-variable]
+   92 |         char my_message[] = "Test mesaji...\n";
+      |              ^~~~~~~~~~
+arm-none-eabi-gcc -o "001_BOOTLOADER_FIRST_PROJECT.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/hasantayfur/STM32CubeIDE/workspace_1.18.1/001_BOOTLOADER_FIRST_PROJECT/STM32F303RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="001_BOOTLOADER_FIRST_PROJECT.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 001_BOOTLOADER_FIRST_PROJECT.elf
+ 
+arm-none-eabi-size  001_BOOTLOADER_FIRST_PROJECT.elf 
+arm-none-eabi-objdump -h -S 001_BOOTLOADER_FIRST_PROJECT.elf  > "001_BOOTLOADER_FIRST_PROJECT.list"
+arm-none-eabi-objcopy  -O ihex 001_BOOTLOADER_FIRST_PROJECT.elf  "001_BOOTLOADER_FIRST_PROJECT.hex"
+   text	   data	    bss	    dec	    hex	filename
+  15416	     92	   2076	  17584	   44b0	001_BOOTLOADER_FIRST_PROJECT.elf
+Finished building: default.size.stdout
+ 
+Finished building: 001_BOOTLOADER_FIRST_PROJECT.hex
+ 
+Finished building: 001_BOOTLOADER_FIRST_PROJECT.list
+ 
