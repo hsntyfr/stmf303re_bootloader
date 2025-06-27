@@ -25,6 +25,7 @@
 #include "stdarg.h"
 #include "stdio.h"
 #include "string.h"
+#include "bootloader_command.h"
 
 /* USER CODE END Includes */
 
@@ -37,6 +38,7 @@
 /* USER CODE BEGIN PD */
 
 #define FLASH_SECTOR_2_BASE_ADDRESS 0x08008000
+#define BL_RX_DATA_LENGTH			100
 
 /* USER CODE END PD */
 
@@ -46,9 +48,14 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+CRC_HandleTypeDef hcrc;
+
 UART_HandleTypeDef huart2;
+UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
+
+uint8_t bootloader_rx_data[BL_RX_DATA_LENGTH];
 
 /* USER CODE END PV */
 
@@ -56,6 +63,8 @@ UART_HandleTypeDef huart2;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
+static void MX_USART3_UART_Init(void);
+static void MX_CRC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -75,31 +84,51 @@ void print_message(char* format, ...){
 }
 
 void bootloader_uart_read_data() {
-	//
+	uint8_t bl_rx_length = 0;
+
+
+	while(1){
+		memset(bootloader_rx_data, 0, BL_RX_DATA_LENGTH);
+		HAL_UART_Receive(&huart3, bootloader_rx_data, 1, HAL_MAX_DELAY);
+		bl_rx_length = bootloader_rx_data[0];
+		HAL_UART_Receive(&huart3, &bootloader_rx_data[1], bl_rx_length, HAL_MAX_DELAY);
+
+		switch (bootloader_rx_data[1]){
+
+		case BL_GET_VER:
+			bl_get_ver_cmd(bootloader_rx_data);
+			break;
+
+		default:
+			break;
+		}
+
+	}
 }
 
 void bootloader_jump_to_user_application() {
 
+
 	//1- reset handlerin adresini tutan bir metot işaretçisi
 	void (*bootloader_application_reset_handler) (void);
-
 	//2- kullanıcı uygulamasına atlandığını ilet
 	print_message("BL DEBUG MSG: bootloader_jump_to_user_application called\n");
-
 	//3- MSP'nin değerini tut
 	uint32_t MSP_value = *(volatile uint32_t*) FLASH_SECTOR_2_BASE_ADDRESS;
-	print_message("BL DEBUG MODE: MSP value: %#x\n", MSP_value);
-	__set_MSP(MSP_value);
-
-	//4- sıfırlama işleyicisinin değerini tut
 	uint32_t reset_value = *(volatile uint32_t*) (FLASH_SECTOR_2_BASE_ADDRESS + 4);
-	print_message("BL DEBUG MODE: reset value: %#x\n", reset_value);
-
-	//5- sıfırlama işleyicisi ile bir işlem başlat
 	bootloader_application_reset_handler = (void *) reset_value;
-
-	//6- sıfırlama işeyicisini çağır ve kullanıcı uygulamasına atla
+	print_message("BL DEBUG MODE: MSP value: %#x\n", MSP_value);
+	//setmsp den sonra bir metot vb olursa işlevini yerine getiremeyebilir
+	__set_MSP(MSP_value);
 	bootloader_application_reset_handler();
+
+	/*void (*bootloader_application_reset_handler) (void);
+	uint32_t reset_value = *(volatile uint32_t*) (FLASH_SECTOR_2_BASE_ADDRESS + 4);
+	uint32_t MSP_value = *(volatile uint32_t*) FLASH_SECTOR_2_BASE_ADDRESS;
+	bootloader_application_reset_handler = (void *) reset_value;
+	print_message("BL DEBUG MODE: reset value: %#x\n", reset_value);
+	bootloader_application_reset_handler();*/
+
 
 }
 
@@ -136,6 +165,8 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART2_UART_Init();
+  MX_USART3_UART_Init();
+  MX_CRC_Init();
   /* USER CODE BEGIN 2 */
 
   if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) != GPIO_PIN_SET){
@@ -204,12 +235,44 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2|RCC_PERIPHCLK_USART3;
   PeriphClkInit.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
+  PeriphClkInit.Usart3ClockSelection = RCC_USART3CLKSOURCE_PCLK1;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
   }
+}
+
+/**
+  * @brief CRC Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_CRC_Init(void)
+{
+
+  /* USER CODE BEGIN CRC_Init 0 */
+
+  /* USER CODE END CRC_Init 0 */
+
+  /* USER CODE BEGIN CRC_Init 1 */
+
+  /* USER CODE END CRC_Init 1 */
+  hcrc.Instance = CRC;
+  hcrc.Init.DefaultPolynomialUse = DEFAULT_POLYNOMIAL_ENABLE;
+  hcrc.Init.DefaultInitValueUse = DEFAULT_INIT_VALUE_ENABLE;
+  hcrc.Init.InputDataInversionMode = CRC_INPUTDATA_INVERSION_NONE;
+  hcrc.Init.OutputDataInversionMode = CRC_OUTPUTDATA_INVERSION_DISABLE;
+  hcrc.InputDataFormat = CRC_INPUTDATA_FORMAT_BYTES;
+  if (HAL_CRC_Init(&hcrc) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN CRC_Init 2 */
+
+  /* USER CODE END CRC_Init 2 */
+
 }
 
 /**
@@ -244,6 +307,41 @@ static void MX_USART2_UART_Init(void)
   /* USER CODE BEGIN USART2_Init 2 */
 
   /* USER CODE END USART2_Init 2 */
+
+}
+
+/**
+  * @brief USART3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART3_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART3_Init 0 */
+
+  /* USER CODE END USART3_Init 0 */
+
+  /* USER CODE BEGIN USART3_Init 1 */
+
+  /* USER CODE END USART3_Init 1 */
+  huart3.Instance = USART3;
+  huart3.Init.BaudRate = 38400;
+  huart3.Init.WordLength = UART_WORDLENGTH_8B;
+  huart3.Init.StopBits = UART_STOPBITS_1;
+  huart3.Init.Parity = UART_PARITY_NONE;
+  huart3.Init.Mode = UART_MODE_TX_RX;
+  huart3.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart3.Init.OverSampling = UART_OVERSAMPLING_16;
+  huart3.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+  huart3.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  if (HAL_UART_Init(&huart3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART3_Init 2 */
+
+  /* USER CODE END USART3_Init 2 */
 
 }
 

@@ -55,6 +55,9 @@ OBJDUMP_LIST += \
 OBJCOPY_HEX += \
 001_BOOTLOADER_FIRST_PROJECT.hex \
 
+OBJCOPY_BIN += \
+001_BOOTLOADER_FIRST_PROJECT.bin \
+
 
 # All Target
 all: main-build
@@ -83,12 +86,17 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
+001_BOOTLOADER_FIRST_PROJECT.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "001_BOOTLOADER_FIRST_PROJECT.bin"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 # Other Targets
 clean:
-	-$(RM) 001_BOOTLOADER_FIRST_PROJECT.elf 001_BOOTLOADER_FIRST_PROJECT.hex 001_BOOTLOADER_FIRST_PROJECT.list 001_BOOTLOADER_FIRST_PROJECT.map default.size.stdout
+	-$(RM) 001_BOOTLOADER_FIRST_PROJECT.bin 001_BOOTLOADER_FIRST_PROJECT.elf 001_BOOTLOADER_FIRST_PROJECT.hex 001_BOOTLOADER_FIRST_PROJECT.list 001_BOOTLOADER_FIRST_PROJECT.map default.size.stdout
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_HEX)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_HEX) $(OBJCOPY_BIN)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'
