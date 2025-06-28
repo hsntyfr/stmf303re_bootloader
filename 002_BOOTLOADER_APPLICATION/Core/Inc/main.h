@@ -51,7 +51,6 @@ extern "C" {
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
-void print_message(char* format, ...);
 
 /* USER CODE BEGIN EFP */
 
@@ -61,6 +60,7 @@ void print_message(char* format, ...);
 
 /* USER CODE BEGIN Private defines */
 extern CRC_HandleTypeDef hcrc;
+extern UART_HandleTypeDef huart3;
 
 /* USER CODE END Private defines */
 

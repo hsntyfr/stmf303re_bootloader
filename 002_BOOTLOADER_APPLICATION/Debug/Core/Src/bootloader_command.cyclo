@@ -1,4 +1,0 @@
-../Core/Src/bootloader_command.c:3:6:bl_get_ver_cmd	2
-../Core/Src/bootloader_command.c:21:9:bootloader_verify_crc	3
-../Core/Src/bootloader_command.c:42:6:bootloader_send_ack	1
-../Core/Src/bootloader_command.c:47:6:bootloader_send_nack	1

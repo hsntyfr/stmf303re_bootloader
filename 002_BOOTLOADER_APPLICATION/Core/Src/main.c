@@ -26,6 +26,7 @@
 #include "stdio.h"
 #include "string.h"
 #include "bootloader_command.h"
+#include "bootloader_command_app.h"
 
 /* USER CODE END Includes */
 
@@ -63,8 +64,8 @@ uint8_t bootloader_rx_data[BL_RX_DATA_LENGTH];
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
-static void MX_USART3_UART_Init(void);
 static void MX_CRC_Init(void);
+static void MX_USART3_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -83,28 +84,54 @@ void print_message(char* format, ...){
 	va_end(va_list);
 }
 
-void bootloader_uart_read_data() {
-	uint8_t bl_rx_length = 0;
+void bootloader_uart_read_data(void)
+{
+
+    uint8_t bl_rx_length = 0;
+
+    while (1)
+    {
+        // 1. RX buffer'ı temizle
+        memset(bootloader_rx_data, 0, BL_RX_DATA_LENGTH);
+
+        // 2. İlk byte'ı al (veri uzunluğu)
+        HAL_UART_Receive(&huart3, bootloader_rx_data, 1, HAL_MAX_DELAY);
+
+        // 3. Alınan ilk byte'ı geri gönder (echo)
+        //HAL_UART_Transmit(&huart3, bootloader_rx_data, 1, HAL_MAX_DELAY);
+
+        // 4. İlk byte'ı uzunluk olarak kullan
+        bl_rx_length = bootloader_rx_data[0];
+
+        // 5. bl_rx_length kadar veri al
+        HAL_UART_Receive(&huart3, &bootloader_rx_data[1], bl_rx_length, HAL_MAX_DELAY);
 
 
-	while(1){
-		memset(bootloader_rx_data, 0, BL_RX_DATA_LENGTH);
-		HAL_UART_Receive(&huart3, bootloader_rx_data, 1, HAL_MAX_DELAY);
-		bl_rx_length = bootloader_rx_data[0];
-		HAL_UART_Receive(&huart3, &bootloader_rx_data[1], bl_rx_length, HAL_MAX_DELAY);
 
-		switch (bootloader_rx_data[1]){
+        switch (bootloader_rx_data[1])
+        {
+            case BL_GET_VER:
+            	for (int i = 0; i < bl_rx_length + 1; i++) {
+            	    //HAL_UART_Transmit(&huart3, &bootloader_rx_data[i], 1, HAL_MAX_DELAY);
+            	}
 
-		case BL_GET_VER:
-			bl_get_ver_cmd(bootloader_rx_data);
-			break;
+                bootloader_get_version_cmd(bootloader_rx_data);
+                break;
+            case BL_GET_HELP:
+                bootloader_get_help_cmd(bootloader_rx_data);
+                break;
 
-		default:
-			break;
-		}
-
-	}
+            default:
+            {
+                char* unknown_cmd = "Bilinmeyen komut!\r\n";
+                HAL_UART_Transmit(&huart3, (uint8_t*)unknown_cmd, strlen(unknown_cmd), HAL_MAX_DELAY);
+                break;
+            }
+        }
+    }
 }
+
+
 
 void bootloader_jump_to_user_application() {
 
@@ -165,14 +192,14 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART2_UART_Init();
-  MX_USART3_UART_Init();
   MX_CRC_Init();
+  MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 
   if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) != GPIO_PIN_SET){
 
 	  print_message("BL DEBUG MODE: Button is pressed go to BL mode\n");
-
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
 	  bootloader_uart_read_data();
 
   }

@@ -17,23 +17,10 @@
 #define BL_OTP_READ                 0x5B
 #define BL_DIS_R_W_PROTECT          0x5C
 
-#define BL_VER 						0x10  //1.0
-
-#define CRC_FAIL					1
-#define CRC_SUCCESS					0
-#define BL_NACK_VALUE				0x7F
-#define BL_ACK_VALUE				0xA5
 
 
 
 
-
-void bl_get_ver_cmd(uint8_t* bl_rx_data);
-void bootloader_send_ack(uint8_t command_code, uint8_t follow_length);
-void bootloader_send_nack();
-
-
-uint8_t bootloader_verify_crc(uint8_t* buffer, uint32_t length, uint32_t crc_host);
 
 
 

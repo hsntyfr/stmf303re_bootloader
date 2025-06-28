@@ -118,6 +118,7 @@ int main(void)
   while (1)
   {
 	  print_message("Hello from BL user application\n");
+	  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 	  HAL_Delay(500);
     /* USER CODE END WHILE */
 
