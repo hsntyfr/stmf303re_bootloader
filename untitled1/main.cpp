@@ -8,12 +8,15 @@
 #define NUMBER_OF_PORT         5
 #define RX_BUFFER_SIZE         256
 
+#define CRC_POLYNOMIAL         0x04C11DB7
+
 
 using namespace std;
 
 string select_opened_port();
 int open_serial_port(string);
-void write_serial_port(int port, unsigned char *tx_buffer, int length);
+void write_serial_port(int port, uint8_t *tx_buffer, int length);
+uint32_t calculate_crc(uint8_t* tx_buffer, int length);
 
 int main() {
 
@@ -22,7 +25,9 @@ int main() {
 
     int serial_port = open_serial_port(opened_port);
 
-    unsigned char tx_buf[] = { 0xA5, 0x01, 0xFF };
+    //uint8_t tx_buf[] = {0x22, 0xFF, 0x01, 0xA5};
+    uint8_t tx_buf[] = {0x05, 0x51};
+
     write_serial_port(serial_port, tx_buf, sizeof(tx_buf));
 
     // HEX veri al
@@ -41,7 +46,7 @@ int main() {
 }
 
 string select_opened_port() {
-    system("ls /dev/tty.* > port_list");
+    system("ls /dev/cu.* > port_list");
     int opened_port = 0;
     string ports[NUMBER_OF_PORT] = {};
     ifstream port_list;
@@ -68,6 +73,8 @@ string select_opened_port() {
 
 int open_serial_port(string port_name) {
     int serial_port = open(port_name.c_str(), O_RDWR | O_NOCTTY | O_SYNC);
+    cout << "open() çağrısı tamamlandı" << endl;
+
     if (serial_port < 0) {
         perror("Seri port açılamadı");
         return 1;
@@ -86,10 +93,42 @@ int open_serial_port(string port_name) {
     return serial_port;
 
 }
-void write_serial_port(int port, unsigned char *tx_buffer, int length) {
+void write_serial_port(int port, uint8_t* tx_buffer, int length) {
     //crc işlemleri eklenecek burada ardından buffer yazılacak
-    write(port, &tx_buffer, length);
+    int crc_index = 0;
+    uint32_t crc = 0;
 
+    crc = calculate_crc(tx_buffer, length);
+
+    crc_index = sizeof(tx_buffer) - 5;
+    cout << crc_index << endl;
+
+    //write(port, tx_buffer, length);
+}
+
+#include <cstdint>
+#include <iostream>
+
+#define CRC_POLYNOMIAL 0x04C11DB7
+
+uint32_t calculate_crc(uint8_t* tx_buffer, int length) {
+    uint32_t crc = 0xFFFFFFFF;
+
+    for (int i = 0; i < length; i++) {
+        crc ^= (uint32_t)(tx_buffer[i]) << 24;  // MSB-first
+
+        for (int j = 0; j < 8; j++) {  // ✅ her byte için 8 bit shift
+            if (crc & 0x80000000)
+                crc = (crc << 1) ^ CRC_POLYNOMIAL;
+            else
+                crc <<= 1;
+        }
+        crc &= 0xFFFFFFFF;  // 32-bit sınırında tutmak için
+    }
+
+    std::cout << "Calculated CRC = 0x" << std::hex << crc << std::endl;
+
+    return crc;
 }
 
 

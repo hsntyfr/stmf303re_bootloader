@@ -7,19 +7,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         00004204  080001a0  080001a0  000011a0  2**4
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000210  080043a4  080043a4  000053a4  2**2
+  2 .rodata       0000021c  080043a4  080043a4  000053a4  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  080045b4  080045b4  00006060  2**0
+  3 .ARM.extab    00000000  080045c0  080045c0  00006060  2**0
                   CONTENTS, READONLY
-  4 .ARM          00000008  080045b4  080045b4  000055b4  2**2
+  4 .ARM          00000008  080045c0  080045c0  000055c0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .preinit_array 00000000  080045bc  080045bc  00006060  2**0
+  5 .preinit_array 00000000  080045c8  080045c8  00006060  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  080045bc  080045bc  000055bc  2**2
+  6 .init_array   00000004  080045c8  080045c8  000055c8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  7 .fini_array   00000004  080045c0  080045c0  000055c0  2**2
+  7 .fini_array   00000004  080045cc  080045cc  000055cc  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  8 .data         00000060  20000000  080045c4  00006000  2**2
+  8 .data         00000060  20000000  080045d0  00006000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
   9 .ccmram       00000000  10000000  10000000  00006060  2**0
                   CONTENTS
@@ -29,25 +29,25 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  12 .ARM.attributes 00000030  00000000  00000000  00006060  2**0
                   CONTENTS, READONLY
- 13 .debug_info   0000a721  00000000  00000000  00006090  2**0
+ 13 .debug_info   0000a74c  00000000  00000000  00006090  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_abbrev 00001c4e  00000000  00000000  000107b1  2**0
+ 14 .debug_abbrev 00001c59  00000000  00000000  000107dc  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_aranges 000007b8  00000000  00000000  00012400  2**3
+ 15 .debug_aranges 000007b8  00000000  00000000  00012438  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  0002056e  00000000  00000000  00012bb8  2**0
+ 16 .debug_macro  0002056e  00000000  00000000  00012bf0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0000bac8  00000000  00000000  00033126  2**0
+ 17 .debug_line   0000bacd  00000000  00000000  0003315e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000c1252  00000000  00000000  0003ebee  2**0
+ 18 .debug_str    000c1267  00000000  00000000  0003ec2b  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  000ffe40  2**0
+ 19 .comment      00000043  00000000  00000000  000ffe92  2**0
                   CONTENTS, READONLY
- 20 .debug_rnglists 000005c7  00000000  00000000  000ffe83  2**0
+ 20 .debug_rnglists 000005c7  00000000  00000000  000ffed5  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_frame  0000222c  00000000  00000000  0010044c  2**2
+ 21 .debug_frame  0000222c  00000000  00000000  0010049c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 22 .debug_line_str 0000007a  00000000  00000000  00102678  2**0
+ 22 .debug_line_str 0000007a  00000000  00000000  001026c8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -163,537 +163,541 @@ void bootloader_get_version_cmd(uint8_t* bl_rx_data){
 
 	uint8_t bl_version = 0;
  8000298:	2300      	movs	r3, #0
- 800029a:	72fb      	strb	r3, [r7, #11]
+ 800029a:	74fb      	strb	r3, [r7, #19]
 	print_message("BL_DEBUG_MSG: Running bootloader_get_version_cmd\n");
- 800029c:	4825      	ldr	r0, [pc, #148]	@ (8000334 <bootloader_get_version_cmd+0xa4>)
- 800029e:	f000 f937 	bl	8000510 <print_message>
+ 800029c:	481e      	ldr	r0, [pc, #120]	@ (8000318 <bootloader_get_version_cmd+0x88>)
+ 800029e:	f000 f927 	bl	80004f0 <print_message>
 
 	uint32_t command_packet_length = bl_rx_data[0] + 1;
  80002a2:	687b      	ldr	r3, [r7, #4]
  80002a4:	781b      	ldrb	r3, [r3, #0]
  80002a6:	3301      	adds	r3, #1
- 80002a8:	613b      	str	r3, [r7, #16]
+ 80002a8:	60fb      	str	r3, [r7, #12]
 	uint32_t host_crc = *((uint32_t*) (bl_rx_data + command_packet_length - 4));
- 80002aa:	693b      	ldr	r3, [r7, #16]
+ 80002aa:	68fb      	ldr	r3, [r7, #12]
  80002ac:	3b04      	subs	r3, #4
  80002ae:	687a      	ldr	r2, [r7, #4]
  80002b0:	4413      	add	r3, r2
  80002b2:	681b      	ldr	r3, [r3, #0]
- 80002b4:	60fb      	str	r3, [r7, #12]
+ 80002b4:	60bb      	str	r3, [r7, #8]
 
 	for (uint32_t i = 0; i < command_packet_length; i++) {
  80002b6:	2300      	movs	r3, #0
  80002b8:	617b      	str	r3, [r7, #20]
- 80002ba:	e00b      	b.n	80002d4 <bootloader_get_version_cmd+0x44>
-		HAL_UART_Transmit(&huart3, &bl_rx_data[i], 1, HAL_MAX_DELAY);
- 80002bc:	687a      	ldr	r2, [r7, #4]
- 80002be:	697b      	ldr	r3, [r7, #20]
- 80002c0:	18d1      	adds	r1, r2, r3
- 80002c2:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
- 80002c6:	2201      	movs	r2, #1
- 80002c8:	481b      	ldr	r0, [pc, #108]	@ (8000338 <bootloader_get_version_cmd+0xa8>)
- 80002ca:	f002 fe7f 	bl	8002fcc <HAL_UART_Transmit>
-	for (uint32_t i = 0; i < command_packet_length; i++) {
- 80002ce:	697b      	ldr	r3, [r7, #20]
- 80002d0:	3301      	adds	r3, #1
- 80002d2:	617b      	str	r3, [r7, #20]
- 80002d4:	697a      	ldr	r2, [r7, #20]
- 80002d6:	693b      	ldr	r3, [r7, #16]
- 80002d8:	429a      	cmp	r2, r3
- 80002da:	d3ef      	bcc.n	80002bc <bootloader_get_version_cmd+0x2c>
+ 80002ba:	e002      	b.n	80002c2 <bootloader_get_version_cmd+0x32>
+ 80002bc:	697b      	ldr	r3, [r7, #20]
+ 80002be:	3301      	adds	r3, #1
+ 80002c0:	617b      	str	r3, [r7, #20]
+ 80002c2:	697a      	ldr	r2, [r7, #20]
+ 80002c4:	68fb      	ldr	r3, [r7, #12]
+ 80002c6:	429a      	cmp	r2, r3
+ 80002c8:	d3f8      	bcc.n	80002bc <bootloader_get_version_cmd+0x2c>
 	}
 
 	//HAL_UART_Transmit(&huart3, &host_crc, 4, HAL_MAX_DELAY);
 
 	//crc kontrolu yapilacak
 	if(!bootloader_verify_crc(&bl_rx_data[0], command_packet_length - 4, host_crc)){ //-4 eklenmeden önce de çalışıyordu
- 80002dc:	693b      	ldr	r3, [r7, #16]
- 80002de:	3b04      	subs	r3, #4
- 80002e0:	68fa      	ldr	r2, [r7, #12]
- 80002e2:	4619      	mov	r1, r3
- 80002e4:	6878      	ldr	r0, [r7, #4]
- 80002e6:	f000 f875 	bl	80003d4 <bootloader_verify_crc>
- 80002ea:	4603      	mov	r3, r0
- 80002ec:	2b00      	cmp	r3, #0
- 80002ee:	d118      	bne.n	8000322 <bootloader_get_version_cmd+0x92>
+ 80002ca:	68fb      	ldr	r3, [r7, #12]
+ 80002cc:	3b04      	subs	r3, #4
+ 80002ce:	68ba      	ldr	r2, [r7, #8]
+ 80002d0:	4619      	mov	r1, r3
+ 80002d2:	6878      	ldr	r0, [r7, #4]
+ 80002d4:	f000 f86e 	bl	80003b4 <bootloader_verify_crc>
+ 80002d8:	4603      	mov	r3, r0
+ 80002da:	2b00      	cmp	r3, #0
+ 80002dc:	d112      	bne.n	8000304 <bootloader_get_version_cmd+0x74>
 		print_message("BL_DEBUG_MSG: Checksum success\n");
- 80002f0:	4812      	ldr	r0, [pc, #72]	@ (800033c <bootloader_get_version_cmd+0xac>)
- 80002f2:	f000 f90d 	bl	8000510 <print_message>
+ 80002de:	480f      	ldr	r0, [pc, #60]	@ (800031c <bootloader_get_version_cmd+0x8c>)
+ 80002e0:	f000 f906 	bl	80004f0 <print_message>
 		bootloader_send_ack(bl_rx_data[0], 1);
- 80002f6:	687b      	ldr	r3, [r7, #4]
- 80002f8:	781b      	ldrb	r3, [r3, #0]
- 80002fa:	2101      	movs	r1, #1
- 80002fc:	4618      	mov	r0, r3
- 80002fe:	f000 f8bf 	bl	8000480 <bootloader_send_ack>
+ 80002e4:	687b      	ldr	r3, [r7, #4]
+ 80002e6:	781b      	ldrb	r3, [r3, #0]
+ 80002e8:	2101      	movs	r1, #1
+ 80002ea:	4618      	mov	r0, r3
+ 80002ec:	f000 f8b8 	bl	8000460 <bootloader_send_ack>
 		bl_version = bootloader_get_version();
- 8000302:	f000 f8fd 	bl	8000500 <bootloader_get_version>
- 8000306:	4603      	mov	r3, r0
- 8000308:	72fb      	strb	r3, [r7, #11]
+ 80002f0:	f000 f8f6 	bl	80004e0 <bootloader_get_version>
+ 80002f4:	4603      	mov	r3, r0
+ 80002f6:	74fb      	strb	r3, [r7, #19]
 		print_message("BL_DEBUG_MSG: BL_VER: %d\n", bl_version);
- 800030a:	7afb      	ldrb	r3, [r7, #11]
- 800030c:	4619      	mov	r1, r3
- 800030e:	480c      	ldr	r0, [pc, #48]	@ (8000340 <bootloader_get_version_cmd+0xb0>)
- 8000310:	f000 f8fe 	bl	8000510 <print_message>
-		bootloader_uart_write_data(&bl_version, 1);
- 8000314:	f107 030b 	add.w	r3, r7, #11
- 8000318:	2101      	movs	r1, #1
- 800031a:	4618      	mov	r0, r3
- 800031c:	f000 f8dc 	bl	80004d8 <bootloader_uart_write_data>
+ 80002f8:	7cfb      	ldrb	r3, [r7, #19]
+ 80002fa:	4619      	mov	r1, r3
+ 80002fc:	4808      	ldr	r0, [pc, #32]	@ (8000320 <bootloader_get_version_cmd+0x90>)
+ 80002fe:	f000 f8f7 	bl	80004f0 <print_message>
 	else{
 		print_message("BL_DEBUG_MSG: Checksum fail\n");
 		bootloader_send_nack();
 	}
 
 }
- 8000320:	e004      	b.n	800032c <bootloader_get_version_cmd+0x9c>
+ 8000302:	e004      	b.n	800030e <bootloader_get_version_cmd+0x7e>
 		print_message("BL_DEBUG_MSG: Checksum fail\n");
- 8000322:	4808      	ldr	r0, [pc, #32]	@ (8000344 <bootloader_get_version_cmd+0xb4>)
- 8000324:	f000 f8f4 	bl	8000510 <print_message>
+ 8000304:	4807      	ldr	r0, [pc, #28]	@ (8000324 <bootloader_get_version_cmd+0x94>)
+ 8000306:	f000 f8f3 	bl	80004f0 <print_message>
 		bootloader_send_nack();
- 8000328:	f000 f8c4 	bl	80004b4 <bootloader_send_nack>
+ 800030a:	f000 f8c3 	bl	8000494 <bootloader_send_nack>
 }
- 800032c:	bf00      	nop
- 800032e:	3718      	adds	r7, #24
- 8000330:	46bd      	mov	sp, r7
- 8000332:	bd80      	pop	{r7, pc}
- 8000334:	080043a4 	.word	0x080043a4
- 8000338:	20000128 	.word	0x20000128
- 800033c:	080043d8 	.word	0x080043d8
- 8000340:	080043f8 	.word	0x080043f8
- 8000344:	08004414 	.word	0x08004414
+ 800030e:	bf00      	nop
+ 8000310:	3718      	adds	r7, #24
+ 8000312:	46bd      	mov	sp, r7
+ 8000314:	bd80      	pop	{r7, pc}
+ 8000316:	bf00      	nop
+ 8000318:	080043a4 	.word	0x080043a4
+ 800031c:	080043d8 	.word	0x080043d8
+ 8000320:	080043f8 	.word	0x080043f8
+ 8000324:	08004414 	.word	0x08004414
 
-08000348 <bootloader_get_help_cmd>:
+08000328 <bootloader_get_help_cmd>:
 
 void bootloader_get_help_cmd(uint8_t* bl_rx_data){
- 8000348:	b590      	push	{r4, r7, lr}
- 800034a:	b085      	sub	sp, #20
- 800034c:	af00      	add	r7, sp, #0
- 800034e:	6078      	str	r0, [r7, #4]
+ 8000328:	b590      	push	{r4, r7, lr}
+ 800032a:	b085      	sub	sp, #20
+ 800032c:	af00      	add	r7, sp, #0
+ 800032e:	6078      	str	r0, [r7, #4]
 	print_message("BL_DEBUG_MSG: Running bootloader_get_help_cmd\n");
- 8000350:	481c      	ldr	r0, [pc, #112]	@ (80003c4 <bootloader_get_help_cmd+0x7c>)
- 8000352:	f000 f8dd 	bl	8000510 <print_message>
+ 8000330:	481c      	ldr	r0, [pc, #112]	@ (80003a4 <bootloader_get_help_cmd+0x7c>)
+ 8000332:	f000 f8dd 	bl	80004f0 <print_message>
 	uint32_t command_packet_len = bl_rx_data[0] + 1;
- 8000356:	687b      	ldr	r3, [r7, #4]
- 8000358:	781b      	ldrb	r3, [r3, #0]
- 800035a:	3301      	adds	r3, #1
- 800035c:	60fb      	str	r3, [r7, #12]
+ 8000336:	687b      	ldr	r3, [r7, #4]
+ 8000338:	781b      	ldrb	r3, [r3, #0]
+ 800033a:	3301      	adds	r3, #1
+ 800033c:	60fb      	str	r3, [r7, #12]
 	uint32_t host_crc = *((uint32_t*) bl_rx_data + command_packet_len - 4);
- 800035e:	68fb      	ldr	r3, [r7, #12]
- 8000360:	f103 4380 	add.w	r3, r3, #1073741824	@ 0x40000000
- 8000364:	3b04      	subs	r3, #4
- 8000366:	009b      	lsls	r3, r3, #2
- 8000368:	687a      	ldr	r2, [r7, #4]
- 800036a:	4413      	add	r3, r2
- 800036c:	681b      	ldr	r3, [r3, #0]
- 800036e:	60bb      	str	r3, [r7, #8]
+ 800033e:	68fb      	ldr	r3, [r7, #12]
+ 8000340:	f103 4380 	add.w	r3, r3, #1073741824	@ 0x40000000
+ 8000344:	3b04      	subs	r3, #4
+ 8000346:	009b      	lsls	r3, r3, #2
+ 8000348:	687a      	ldr	r2, [r7, #4]
+ 800034a:	4413      	add	r3, r2
+ 800034c:	681b      	ldr	r3, [r3, #0]
+ 800034e:	60bb      	str	r3, [r7, #8]
 	if(!bootloader_verify_crc(&bl_rx_data[0], command_packet_len - 4, host_crc)){
- 8000370:	68fb      	ldr	r3, [r7, #12]
- 8000372:	3b04      	subs	r3, #4
- 8000374:	68ba      	ldr	r2, [r7, #8]
- 8000376:	4619      	mov	r1, r3
- 8000378:	6878      	ldr	r0, [r7, #4]
- 800037a:	f000 f82b 	bl	80003d4 <bootloader_verify_crc>
- 800037e:	4603      	mov	r3, r0
- 8000380:	2b00      	cmp	r3, #0
- 8000382:	d116      	bne.n	80003b2 <bootloader_get_help_cmd+0x6a>
+ 8000350:	68fb      	ldr	r3, [r7, #12]
+ 8000352:	3b04      	subs	r3, #4
+ 8000354:	68ba      	ldr	r2, [r7, #8]
+ 8000356:	4619      	mov	r1, r3
+ 8000358:	6878      	ldr	r0, [r7, #4]
+ 800035a:	f000 f82b 	bl	80003b4 <bootloader_verify_crc>
+ 800035e:	4603      	mov	r3, r0
+ 8000360:	2b00      	cmp	r3, #0
+ 8000362:	d116      	bne.n	8000392 <bootloader_get_help_cmd+0x6a>
 		print_message("BL_DEBUG_MSG: Checksum success\n");
- 8000384:	4810      	ldr	r0, [pc, #64]	@ (80003c8 <bootloader_get_help_cmd+0x80>)
- 8000386:	f000 f8c3 	bl	8000510 <print_message>
+ 8000364:	4810      	ldr	r0, [pc, #64]	@ (80003a8 <bootloader_get_help_cmd+0x80>)
+ 8000366:	f000 f8c3 	bl	80004f0 <print_message>
 		bootloader_send_ack(bl_rx_data[0], strlen(supported_commands));
- 800038a:	687b      	ldr	r3, [r7, #4]
- 800038c:	781c      	ldrb	r4, [r3, #0]
- 800038e:	480f      	ldr	r0, [pc, #60]	@ (80003cc <bootloader_get_help_cmd+0x84>)
- 8000390:	f7ff ff26 	bl	80001e0 <strlen>
- 8000394:	4603      	mov	r3, r0
- 8000396:	b2db      	uxtb	r3, r3
- 8000398:	4619      	mov	r1, r3
- 800039a:	4620      	mov	r0, r4
- 800039c:	f000 f870 	bl	8000480 <bootloader_send_ack>
+ 800036a:	687b      	ldr	r3, [r7, #4]
+ 800036c:	781c      	ldrb	r4, [r3, #0]
+ 800036e:	480f      	ldr	r0, [pc, #60]	@ (80003ac <bootloader_get_help_cmd+0x84>)
+ 8000370:	f7ff ff36 	bl	80001e0 <strlen>
+ 8000374:	4603      	mov	r3, r0
+ 8000376:	b2db      	uxtb	r3, r3
+ 8000378:	4619      	mov	r1, r3
+ 800037a:	4620      	mov	r0, r4
+ 800037c:	f000 f870 	bl	8000460 <bootloader_send_ack>
 		bootloader_uart_write_data(supported_commands, strlen(supported_commands));
- 80003a0:	480a      	ldr	r0, [pc, #40]	@ (80003cc <bootloader_get_help_cmd+0x84>)
- 80003a2:	f7ff ff1d 	bl	80001e0 <strlen>
- 80003a6:	4603      	mov	r3, r0
- 80003a8:	4619      	mov	r1, r3
- 80003aa:	4808      	ldr	r0, [pc, #32]	@ (80003cc <bootloader_get_help_cmd+0x84>)
- 80003ac:	f000 f894 	bl	80004d8 <bootloader_uart_write_data>
+ 8000380:	480a      	ldr	r0, [pc, #40]	@ (80003ac <bootloader_get_help_cmd+0x84>)
+ 8000382:	f7ff ff2d 	bl	80001e0 <strlen>
+ 8000386:	4603      	mov	r3, r0
+ 8000388:	4619      	mov	r1, r3
+ 800038a:	4808      	ldr	r0, [pc, #32]	@ (80003ac <bootloader_get_help_cmd+0x84>)
+ 800038c:	f000 f894 	bl	80004b8 <bootloader_uart_write_data>
 
 
 	}
 
 
 }
- 80003b0:	e004      	b.n	80003bc <bootloader_get_help_cmd+0x74>
+ 8000390:	e004      	b.n	800039c <bootloader_get_help_cmd+0x74>
 		print_message("BL_DEBUG_MSG: Checksum fail\n");
- 80003b2:	4807      	ldr	r0, [pc, #28]	@ (80003d0 <bootloader_get_help_cmd+0x88>)
- 80003b4:	f000 f8ac 	bl	8000510 <print_message>
+ 8000392:	4807      	ldr	r0, [pc, #28]	@ (80003b0 <bootloader_get_help_cmd+0x88>)
+ 8000394:	f000 f8ac 	bl	80004f0 <print_message>
 		bootloader_send_nack();
- 80003b8:	f000 f87c 	bl	80004b4 <bootloader_send_nack>
+ 8000398:	f000 f87c 	bl	8000494 <bootloader_send_nack>
 }
- 80003bc:	bf00      	nop
- 80003be:	3714      	adds	r7, #20
- 80003c0:	46bd      	mov	sp, r7
- 80003c2:	bd90      	pop	{r4, r7, pc}
- 80003c4:	08004434 	.word	0x08004434
- 80003c8:	080043d8 	.word	0x080043d8
- 80003cc:	20000000 	.word	0x20000000
- 80003d0:	08004414 	.word	0x08004414
+ 800039c:	bf00      	nop
+ 800039e:	3714      	adds	r7, #20
+ 80003a0:	46bd      	mov	sp, r7
+ 80003a2:	bd90      	pop	{r4, r7, pc}
+ 80003a4:	08004434 	.word	0x08004434
+ 80003a8:	080043d8 	.word	0x080043d8
+ 80003ac:	20000000 	.word	0x20000000
+ 80003b0:	08004414 	.word	0x08004414
 
-080003d4 <bootloader_verify_crc>:
+080003b4 <bootloader_verify_crc>:
 
 
-uint8_t bootloader_verify_crc(uint8_t *buffer, uint32_t len, uint32_t crc){
- 80003d4:	b580      	push	{r7, lr}
- 80003d6:	b088      	sub	sp, #32
- 80003d8:	af00      	add	r7, sp, #0
- 80003da:	60f8      	str	r0, [r7, #12]
- 80003dc:	60b9      	str	r1, [r7, #8]
- 80003de:	607a      	str	r2, [r7, #4]
+uint8_t bootloader_verify_crc(uint8_t *Buffer, uint32_t len, uint32_t crcHost)
+{
+ 80003b4:	b580      	push	{r7, lr}
+ 80003b6:	b08a      	sub	sp, #40	@ 0x28
+ 80003b8:	af00      	add	r7, sp, #0
+ 80003ba:	60f8      	str	r0, [r7, #12]
+ 80003bc:	60b9      	str	r1, [r7, #8]
+ 80003be:	607a      	str	r2, [r7, #4]
+    uint32_t crcValue = 0xFF;
+ 80003c0:	23ff      	movs	r3, #255	@ 0xff
+ 80003c2:	623b      	str	r3, [r7, #32]
+    uint32_t data = 0;
+ 80003c4:	2300      	movs	r3, #0
+ 80003c6:	61fb      	str	r3, [r7, #28]
 
-	uint32_t crc_value = 0xFF;
- 80003e0:	23ff      	movs	r3, #255	@ 0xff
- 80003e2:	61fb      	str	r3, [r7, #28]
-	//uint32_t data = 0;
-	//HAL_UART_Transmit(&huart3, &crc, 4, HAL_MAX_DELAY);
-	__HAL_CRC_DR_RESET(&hcrc);
- 80003e4:	4b24      	ldr	r3, [pc, #144]	@ (8000478 <bootloader_verify_crc+0xa4>)
- 80003e6:	681b      	ldr	r3, [r3, #0]
- 80003e8:	689a      	ldr	r2, [r3, #8]
- 80003ea:	4b23      	ldr	r3, [pc, #140]	@ (8000478 <bootloader_verify_crc+0xa4>)
- 80003ec:	681b      	ldr	r3, [r3, #0]
- 80003ee:	f042 0201 	orr.w	r2, r2, #1
- 80003f2:	609a      	str	r2, [r3, #8]
+    __HAL_CRC_DR_RESET(&hcrc);  // Reset başa alındı, daha doğru
+ 80003c8:	4b22      	ldr	r3, [pc, #136]	@ (8000454 <bootloader_verify_crc+0xa0>)
+ 80003ca:	681b      	ldr	r3, [r3, #0]
+ 80003cc:	689a      	ldr	r2, [r3, #8]
+ 80003ce:	4b21      	ldr	r3, [pc, #132]	@ (8000454 <bootloader_verify_crc+0xa0>)
+ 80003d0:	681b      	ldr	r3, [r3, #0]
+ 80003d2:	f042 0201 	orr.w	r2, r2, #1
+ 80003d6:	609a      	str	r2, [r3, #8]
 
-    uint8_t data[2] = {0x05, 0x51};
- 80003f4:	f245 1305 	movw	r3, #20741	@ 0x5105
- 80003f8:	833b      	strh	r3, [r7, #24]
-    uint32_t data32;
-
-    // Byte dizisini 32-bit hizalamak için padding yapılır:
-    data32 =  (uint32_t)data[0] |
- 80003fa:	7e3b      	ldrb	r3, [r7, #24]
- 80003fc:	461a      	mov	r2, r3
-             ((uint32_t)data[1] << 8);  // 0x00005105 olur (Little Endian)
- 80003fe:	7e7b      	ldrb	r3, [r7, #25]
- 8000400:	021b      	lsls	r3, r3, #8
-    data32 =  (uint32_t)data[0] |
- 8000402:	4313      	orrs	r3, r2
- 8000404:	617b      	str	r3, [r7, #20]
-
-    __HAL_CRC_DR_RESET(&hcrc);  // CRC birimini sıfırla
- 8000406:	4b1c      	ldr	r3, [pc, #112]	@ (8000478 <bootloader_verify_crc+0xa4>)
- 8000408:	681b      	ldr	r3, [r3, #0]
- 800040a:	689a      	ldr	r2, [r3, #8]
- 800040c:	4b1a      	ldr	r3, [pc, #104]	@ (8000478 <bootloader_verify_crc+0xa4>)
- 800040e:	681b      	ldr	r3, [r3, #0]
- 8000410:	f042 0201 	orr.w	r2, r2, #1
- 8000414:	609a      	str	r2, [r3, #8]
-    crc_value = HAL_CRC_Accumulate(&hcrc, &data32, 1);  // 1 x 32-bit word
- 8000416:	f107 0314 	add.w	r3, r7, #20
- 800041a:	2201      	movs	r2, #1
- 800041c:	4619      	mov	r1, r3
- 800041e:	4816      	ldr	r0, [pc, #88]	@ (8000478 <bootloader_verify_crc+0xa4>)
- 8000420:	f000 fdc4 	bl	8000fac <HAL_CRC_Accumulate>
- 8000424:	4603      	mov	r3, r0
- 8000426:	61fb      	str	r3, [r7, #28]
-
-    // Sonucu UART üzerinden gönderelim:
-    HAL_UART_Transmit(&huart3, (uint8_t*)&crc_value, 4, HAL_MAX_DELAY);
- 8000428:	f107 011c 	add.w	r1, r7, #28
- 800042c:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
- 8000430:	2204      	movs	r2, #4
- 8000432:	4812      	ldr	r0, [pc, #72]	@ (800047c <bootloader_verify_crc+0xa8>)
- 8000434:	f002 fdca 	bl	8002fcc <HAL_UART_Transmit>
-    uint8_t ch = 'H';
- 8000438:	2348      	movs	r3, #72	@ 0x48
- 800043a:	74fb      	strb	r3, [r7, #19]
-    HAL_UART_Transmit(&huart3, &ch, 1, HAL_MAX_DELAY);
- 800043c:	f107 0113 	add.w	r1, r7, #19
- 8000440:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
- 8000444:	2201      	movs	r2, #1
- 8000446:	480d      	ldr	r0, [pc, #52]	@ (800047c <bootloader_verify_crc+0xa8>)
- 8000448:	f002 fdc0 	bl	8002fcc <HAL_UART_Transmit>
+    for(uint32_t i = 0; i < len; i++)
+ 80003d8:	2300      	movs	r3, #0
+ 80003da:	627b      	str	r3, [r7, #36]	@ 0x24
+ 80003dc:	e010      	b.n	8000400 <bootloader_verify_crc+0x4c>
+    {
+        data = Buffer[i];
+ 80003de:	68fa      	ldr	r2, [r7, #12]
+ 80003e0:	6a7b      	ldr	r3, [r7, #36]	@ 0x24
+ 80003e2:	4413      	add	r3, r2
+ 80003e4:	781b      	ldrb	r3, [r3, #0]
+ 80003e6:	61fb      	str	r3, [r7, #28]
+        //HAL_UART_Transmit(&huart3, &Buffer[i], 1, HAL_MAX_DELAY);
+        crcValue = HAL_CRC_Accumulate(&hcrc, &data, 1);
+ 80003e8:	f107 031c 	add.w	r3, r7, #28
+ 80003ec:	2201      	movs	r2, #1
+ 80003ee:	4619      	mov	r1, r3
+ 80003f0:	4818      	ldr	r0, [pc, #96]	@ (8000454 <bootloader_verify_crc+0xa0>)
+ 80003f2:	f000 fddb 	bl	8000fac <HAL_CRC_Accumulate>
+ 80003f6:	4603      	mov	r3, r0
+ 80003f8:	623b      	str	r3, [r7, #32]
+    for(uint32_t i = 0; i < len; i++)
+ 80003fa:	6a7b      	ldr	r3, [r7, #36]	@ 0x24
+ 80003fc:	3301      	adds	r3, #1
+ 80003fe:	627b      	str	r3, [r7, #36]	@ 0x24
+ 8000400:	6a7a      	ldr	r2, [r7, #36]	@ 0x24
+ 8000402:	68bb      	ldr	r3, [r7, #8]
+ 8000404:	429a      	cmp	r2, r3
+ 8000406:	d3ea      	bcc.n	80003de <bootloader_verify_crc+0x2a>
+    }
 
 
 
-	if(crc_value == crc){
- 800044c:	69fb      	ldr	r3, [r7, #28]
- 800044e:	687a      	ldr	r2, [r7, #4]
- 8000450:	429a      	cmp	r2, r3
- 8000452:	d10b      	bne.n	800046c <bootloader_verify_crc+0x98>
-		  uint8_t ch = 'P';
- 8000454:	2350      	movs	r3, #80	@ 0x50
- 8000456:	74bb      	strb	r3, [r7, #18]
-		    HAL_UART_Transmit(&huart3, &ch, 1, HAL_MAX_DELAY);
- 8000458:	f107 0112 	add.w	r1, r7, #18
- 800045c:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
- 8000460:	2201      	movs	r2, #1
- 8000462:	4806      	ldr	r0, [pc, #24]	@ (800047c <bootloader_verify_crc+0xa8>)
- 8000464:	f002 fdb2 	bl	8002fcc <HAL_UART_Transmit>
-		return CRC_SUCCESS;
- 8000468:	2300      	movs	r3, #0
- 800046a:	e000      	b.n	800046e <bootloader_verify_crc+0x9a>
-	}
+    // Hesaplanan CRC'yi UART üzerinden gönder (4 byte olarak)
+    HAL_UART_Transmit(&huart3, (uint8_t*)&crcValue, 4, HAL_MAX_DELAY);
+ 8000408:	f107 0120 	add.w	r1, r7, #32
+ 800040c:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
+ 8000410:	2204      	movs	r2, #4
+ 8000412:	4811      	ldr	r0, [pc, #68]	@ (8000458 <bootloader_verify_crc+0xa4>)
+ 8000414:	f002 fdda 	bl	8002fcc <HAL_UART_Transmit>
 
-	return CRC_FAIL;
- 800046c:	2301      	movs	r3, #1
+    // EOL karakteri istersen okunabilirlik için ekle
+    uint8_t newline[] = "\r\n";
+ 8000418:	4a10      	ldr	r2, [pc, #64]	@ (800045c <bootloader_verify_crc+0xa8>)
+ 800041a:	f107 0318 	add.w	r3, r7, #24
+ 800041e:	6812      	ldr	r2, [r2, #0]
+ 8000420:	4611      	mov	r1, r2
+ 8000422:	8019      	strh	r1, [r3, #0]
+ 8000424:	3302      	adds	r3, #2
+ 8000426:	0c12      	lsrs	r2, r2, #16
+ 8000428:	701a      	strb	r2, [r3, #0]
+    //HAL_UART_Transmit(&huart3, newline, 2, HAL_MAX_DELAY);
 
+    // Son olarak CRC karşılaştırması
+    if(crcValue == crcHost)
+ 800042a:	6a3b      	ldr	r3, [r7, #32]
+ 800042c:	687a      	ldr	r2, [r7, #4]
+ 800042e:	429a      	cmp	r2, r3
+ 8000430:	d10b      	bne.n	800044a <bootloader_verify_crc+0x96>
+    {
+        uint8_t de = 'a';
+ 8000432:	2361      	movs	r3, #97	@ 0x61
+ 8000434:	75fb      	strb	r3, [r7, #23]
+        HAL_UART_Transmit(&huart3, &de, 1, HAL_MAX_DELAY);
+ 8000436:	f107 0117 	add.w	r1, r7, #23
+ 800043a:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
+ 800043e:	2201      	movs	r2, #1
+ 8000440:	4805      	ldr	r0, [pc, #20]	@ (8000458 <bootloader_verify_crc+0xa4>)
+ 8000442:	f002 fdc3 	bl	8002fcc <HAL_UART_Transmit>
+        return CRC_SUCCESS;
+ 8000446:	2300      	movs	r3, #0
+ 8000448:	e000      	b.n	800044c <bootloader_verify_crc+0x98>
+    }
+
+    return CRC_FAIL;
+ 800044a:	2301      	movs	r3, #1
 }
- 800046e:	4618      	mov	r0, r3
- 8000470:	3720      	adds	r7, #32
- 8000472:	46bd      	mov	sp, r7
- 8000474:	bd80      	pop	{r7, pc}
- 8000476:	bf00      	nop
- 8000478:	2000007c 	.word	0x2000007c
- 800047c:	20000128 	.word	0x20000128
+ 800044c:	4618      	mov	r0, r3
+ 800044e:	3728      	adds	r7, #40	@ 0x28
+ 8000450:	46bd      	mov	sp, r7
+ 8000452:	bd80      	pop	{r7, pc}
+ 8000454:	2000007c 	.word	0x2000007c
+ 8000458:	20000128 	.word	0x20000128
+ 800045c:	08004464 	.word	0x08004464
 
-08000480 <bootloader_send_ack>:
+08000460 <bootloader_send_ack>:
+
 
 
 void bootloader_send_ack(uint8_t command_code, uint8_t follow_length){
- 8000480:	b580      	push	{r7, lr}
- 8000482:	b084      	sub	sp, #16
- 8000484:	af00      	add	r7, sp, #0
- 8000486:	4603      	mov	r3, r0
- 8000488:	460a      	mov	r2, r1
- 800048a:	71fb      	strb	r3, [r7, #7]
- 800048c:	4613      	mov	r3, r2
- 800048e:	71bb      	strb	r3, [r7, #6]
+ 8000460:	b580      	push	{r7, lr}
+ 8000462:	b084      	sub	sp, #16
+ 8000464:	af00      	add	r7, sp, #0
+ 8000466:	4603      	mov	r3, r0
+ 8000468:	460a      	mov	r2, r1
+ 800046a:	71fb      	strb	r3, [r7, #7]
+ 800046c:	4613      	mov	r3, r2
+ 800046e:	71bb      	strb	r3, [r7, #6]
 	uint8_t ack_buffer[2];
 	ack_buffer[0] = BL_ACK_VALUE;
- 8000490:	23a5      	movs	r3, #165	@ 0xa5
- 8000492:	733b      	strb	r3, [r7, #12]
+ 8000470:	23a5      	movs	r3, #165	@ 0xa5
+ 8000472:	733b      	strb	r3, [r7, #12]
 	ack_buffer[1] = follow_length;
- 8000494:	79bb      	ldrb	r3, [r7, #6]
- 8000496:	737b      	strb	r3, [r7, #13]
+ 8000474:	79bb      	ldrb	r3, [r7, #6]
+ 8000476:	737b      	strb	r3, [r7, #13]
 
 	HAL_UART_Transmit(&huart3, ack_buffer, 2, HAL_MAX_DELAY);
- 8000498:	f107 010c 	add.w	r1, r7, #12
- 800049c:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
- 80004a0:	2202      	movs	r2, #2
- 80004a2:	4803      	ldr	r0, [pc, #12]	@ (80004b0 <bootloader_send_ack+0x30>)
- 80004a4:	f002 fd92 	bl	8002fcc <HAL_UART_Transmit>
+ 8000478:	f107 010c 	add.w	r1, r7, #12
+ 800047c:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
+ 8000480:	2202      	movs	r2, #2
+ 8000482:	4803      	ldr	r0, [pc, #12]	@ (8000490 <bootloader_send_ack+0x30>)
+ 8000484:	f002 fda2 	bl	8002fcc <HAL_UART_Transmit>
 }
- 80004a8:	bf00      	nop
- 80004aa:	3710      	adds	r7, #16
- 80004ac:	46bd      	mov	sp, r7
- 80004ae:	bd80      	pop	{r7, pc}
- 80004b0:	20000128 	.word	0x20000128
+ 8000488:	bf00      	nop
+ 800048a:	3710      	adds	r7, #16
+ 800048c:	46bd      	mov	sp, r7
+ 800048e:	bd80      	pop	{r7, pc}
+ 8000490:	20000128 	.word	0x20000128
 
-080004b4 <bootloader_send_nack>:
+08000494 <bootloader_send_nack>:
 
 
 void bootloader_send_nack(){
- 80004b4:	b580      	push	{r7, lr}
- 80004b6:	b082      	sub	sp, #8
- 80004b8:	af00      	add	r7, sp, #0
+ 8000494:	b580      	push	{r7, lr}
+ 8000496:	b082      	sub	sp, #8
+ 8000498:	af00      	add	r7, sp, #0
 	uint8_t nack_value = BL_NACK_VALUE;
- 80004ba:	237f      	movs	r3, #127	@ 0x7f
- 80004bc:	71fb      	strb	r3, [r7, #7]
+ 800049a:	237f      	movs	r3, #127	@ 0x7f
+ 800049c:	71fb      	strb	r3, [r7, #7]
 	HAL_UART_Transmit(&huart3, &nack_value, 1, HAL_MAX_DELAY);
- 80004be:	1df9      	adds	r1, r7, #7
- 80004c0:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
- 80004c4:	2201      	movs	r2, #1
- 80004c6:	4803      	ldr	r0, [pc, #12]	@ (80004d4 <bootloader_send_nack+0x20>)
- 80004c8:	f002 fd80 	bl	8002fcc <HAL_UART_Transmit>
+ 800049e:	1df9      	adds	r1, r7, #7
+ 80004a0:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
+ 80004a4:	2201      	movs	r2, #1
+ 80004a6:	4803      	ldr	r0, [pc, #12]	@ (80004b4 <bootloader_send_nack+0x20>)
+ 80004a8:	f002 fd90 	bl	8002fcc <HAL_UART_Transmit>
 
 }
- 80004cc:	bf00      	nop
- 80004ce:	3708      	adds	r7, #8
- 80004d0:	46bd      	mov	sp, r7
- 80004d2:	bd80      	pop	{r7, pc}
- 80004d4:	20000128 	.word	0x20000128
+ 80004ac:	bf00      	nop
+ 80004ae:	3708      	adds	r7, #8
+ 80004b0:	46bd      	mov	sp, r7
+ 80004b2:	bd80      	pop	{r7, pc}
+ 80004b4:	20000128 	.word	0x20000128
 
-080004d8 <bootloader_uart_write_data>:
+080004b8 <bootloader_uart_write_data>:
 
 void bootloader_uart_write_data(uint8_t *buffer, uint32_t len){
- 80004d8:	b580      	push	{r7, lr}
- 80004da:	b082      	sub	sp, #8
- 80004dc:	af00      	add	r7, sp, #0
- 80004de:	6078      	str	r0, [r7, #4]
- 80004e0:	6039      	str	r1, [r7, #0]
+ 80004b8:	b580      	push	{r7, lr}
+ 80004ba:	b082      	sub	sp, #8
+ 80004bc:	af00      	add	r7, sp, #0
+ 80004be:	6078      	str	r0, [r7, #4]
+ 80004c0:	6039      	str	r1, [r7, #0]
 	HAL_UART_Transmit(&huart3, buffer, len, HAL_MAX_DELAY);
- 80004e2:	683b      	ldr	r3, [r7, #0]
- 80004e4:	b29a      	uxth	r2, r3
- 80004e6:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
- 80004ea:	6879      	ldr	r1, [r7, #4]
- 80004ec:	4803      	ldr	r0, [pc, #12]	@ (80004fc <bootloader_uart_write_data+0x24>)
- 80004ee:	f002 fd6d 	bl	8002fcc <HAL_UART_Transmit>
+ 80004c2:	683b      	ldr	r3, [r7, #0]
+ 80004c4:	b29a      	uxth	r2, r3
+ 80004c6:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
+ 80004ca:	6879      	ldr	r1, [r7, #4]
+ 80004cc:	4803      	ldr	r0, [pc, #12]	@ (80004dc <bootloader_uart_write_data+0x24>)
+ 80004ce:	f002 fd7d 	bl	8002fcc <HAL_UART_Transmit>
 }
- 80004f2:	bf00      	nop
- 80004f4:	3708      	adds	r7, #8
- 80004f6:	46bd      	mov	sp, r7
- 80004f8:	bd80      	pop	{r7, pc}
- 80004fa:	bf00      	nop
- 80004fc:	20000128 	.word	0x20000128
+ 80004d2:	bf00      	nop
+ 80004d4:	3708      	adds	r7, #8
+ 80004d6:	46bd      	mov	sp, r7
+ 80004d8:	bd80      	pop	{r7, pc}
+ 80004da:	bf00      	nop
+ 80004dc:	20000128 	.word	0x20000128
 
-08000500 <bootloader_get_version>:
+080004e0 <bootloader_get_version>:
 
 uint8_t bootloader_get_version(void){
- 8000500:	b480      	push	{r7}
- 8000502:	af00      	add	r7, sp, #0
+ 80004e0:	b480      	push	{r7}
+ 80004e2:	af00      	add	r7, sp, #0
 	return BL_VER;
- 8000504:	2310      	movs	r3, #16
+ 80004e4:	2310      	movs	r3, #16
 }
- 8000506:	4618      	mov	r0, r3
- 8000508:	46bd      	mov	sp, r7
- 800050a:	f85d 7b04 	ldr.w	r7, [sp], #4
- 800050e:	4770      	bx	lr
+ 80004e6:	4618      	mov	r0, r3
+ 80004e8:	46bd      	mov	sp, r7
+ 80004ea:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 80004ee:	4770      	bx	lr
 
-08000510 <print_message>:
+080004f0 <print_message>:
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
 void print_message(char* format, ...){
- 8000510:	b40f      	push	{r0, r1, r2, r3}
- 8000512:	b580      	push	{r7, lr}
- 8000514:	b09a      	sub	sp, #104	@ 0x68
- 8000516:	af00      	add	r7, sp, #0
+ 80004f0:	b40f      	push	{r0, r1, r2, r3}
+ 80004f2:	b580      	push	{r7, lr}
+ 80004f4:	b09a      	sub	sp, #104	@ 0x68
+ 80004f6:	af00      	add	r7, sp, #0
 
 	char coming_message[100];
 
 	va_list va_list;
 	va_start(va_list, format);
- 8000518:	f107 0374 	add.w	r3, r7, #116	@ 0x74
- 800051c:	603b      	str	r3, [r7, #0]
+ 80004f8:	f107 0374 	add.w	r3, r7, #116	@ 0x74
+ 80004fc:	603b      	str	r3, [r7, #0]
 	vsprintf(coming_message, format, va_list);
- 800051e:	1d3b      	adds	r3, r7, #4
- 8000520:	683a      	ldr	r2, [r7, #0]
- 8000522:	6f39      	ldr	r1, [r7, #112]	@ 0x70
- 8000524:	4618      	mov	r0, r3
- 8000526:	f003 faa9 	bl	8003a7c <vsiprintf>
+ 80004fe:	1d3b      	adds	r3, r7, #4
+ 8000500:	683a      	ldr	r2, [r7, #0]
+ 8000502:	6f39      	ldr	r1, [r7, #112]	@ 0x70
+ 8000504:	4618      	mov	r0, r3
+ 8000506:	f003 fab9 	bl	8003a7c <vsiprintf>
 	HAL_UART_Transmit(&huart2, (uint8_t*)coming_message, strlen(coming_message), HAL_MAX_DELAY);
- 800052a:	1d3b      	adds	r3, r7, #4
- 800052c:	4618      	mov	r0, r3
- 800052e:	f7ff fe57 	bl	80001e0 <strlen>
- 8000532:	4603      	mov	r3, r0
- 8000534:	b29a      	uxth	r2, r3
- 8000536:	1d39      	adds	r1, r7, #4
- 8000538:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
- 800053c:	4804      	ldr	r0, [pc, #16]	@ (8000550 <print_message+0x40>)
- 800053e:	f002 fd45 	bl	8002fcc <HAL_UART_Transmit>
+ 800050a:	1d3b      	adds	r3, r7, #4
+ 800050c:	4618      	mov	r0, r3
+ 800050e:	f7ff fe67 	bl	80001e0 <strlen>
+ 8000512:	4603      	mov	r3, r0
+ 8000514:	b29a      	uxth	r2, r3
+ 8000516:	1d39      	adds	r1, r7, #4
+ 8000518:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
+ 800051c:	4804      	ldr	r0, [pc, #16]	@ (8000530 <print_message+0x40>)
+ 800051e:	f002 fd55 	bl	8002fcc <HAL_UART_Transmit>
 	va_end(va_list);
 }
- 8000542:	bf00      	nop
- 8000544:	3768      	adds	r7, #104	@ 0x68
- 8000546:	46bd      	mov	sp, r7
- 8000548:	e8bd 4080 	ldmia.w	sp!, {r7, lr}
- 800054c:	b004      	add	sp, #16
- 800054e:	4770      	bx	lr
- 8000550:	200000a0 	.word	0x200000a0
+ 8000522:	bf00      	nop
+ 8000524:	3768      	adds	r7, #104	@ 0x68
+ 8000526:	46bd      	mov	sp, r7
+ 8000528:	e8bd 4080 	ldmia.w	sp!, {r7, lr}
+ 800052c:	b004      	add	sp, #16
+ 800052e:	4770      	bx	lr
+ 8000530:	200000a0 	.word	0x200000a0
 
-08000554 <bootloader_uart_read_data>:
+08000534 <bootloader_uart_read_data>:
 
 void bootloader_uart_read_data(void)
 {
- 8000554:	b580      	push	{r7, lr}
- 8000556:	b084      	sub	sp, #16
- 8000558:	af00      	add	r7, sp, #0
+ 8000534:	b580      	push	{r7, lr}
+ 8000536:	b084      	sub	sp, #16
+ 8000538:	af00      	add	r7, sp, #0
+    // Fonksiyona girildiğinde mesaj gönder
+    char* giris_mesaji = "BLi\r\n";
+ 800053a:	4b27      	ldr	r3, [pc, #156]	@ (80005d8 <bootloader_uart_read_data+0xa4>)
+ 800053c:	60bb      	str	r3, [r7, #8]
+    HAL_UART_Transmit(&huart3, (uint8_t*)giris_mesaji, strlen(giris_mesaji), HAL_MAX_DELAY);
+ 800053e:	68b8      	ldr	r0, [r7, #8]
+ 8000540:	f7ff fe4e 	bl	80001e0 <strlen>
+ 8000544:	4603      	mov	r3, r0
+ 8000546:	b29a      	uxth	r2, r3
+ 8000548:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
+ 800054c:	68b9      	ldr	r1, [r7, #8]
+ 800054e:	4823      	ldr	r0, [pc, #140]	@ (80005dc <bootloader_uart_read_data+0xa8>)
+ 8000550:	f002 fd3c 	bl	8002fcc <HAL_UART_Transmit>
 
     uint8_t bl_rx_length = 0;
- 800055a:	2300      	movs	r3, #0
- 800055c:	72fb      	strb	r3, [r7, #11]
+ 8000554:	2300      	movs	r3, #0
+ 8000556:	71fb      	strb	r3, [r7, #7]
 
     while (1)
     {
         // 1. RX buffer'ı temizle
         memset(bootloader_rx_data, 0, BL_RX_DATA_LENGTH);
- 800055e:	2264      	movs	r2, #100	@ 0x64
- 8000560:	2100      	movs	r1, #0
- 8000562:	481e      	ldr	r0, [pc, #120]	@ (80005dc <bootloader_uart_read_data+0x88>)
- 8000564:	f003 fa94 	bl	8003a90 <memset>
+ 8000558:	2264      	movs	r2, #100	@ 0x64
+ 800055a:	2100      	movs	r1, #0
+ 800055c:	4820      	ldr	r0, [pc, #128]	@ (80005e0 <bootloader_uart_read_data+0xac>)
+ 800055e:	f003 fa97 	bl	8003a90 <memset>
 
         // 2. İlk byte'ı al (veri uzunluğu)
         HAL_UART_Receive(&huart3, bootloader_rx_data, 1, HAL_MAX_DELAY);
- 8000568:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
- 800056c:	2201      	movs	r2, #1
- 800056e:	491b      	ldr	r1, [pc, #108]	@ (80005dc <bootloader_uart_read_data+0x88>)
- 8000570:	481b      	ldr	r0, [pc, #108]	@ (80005e0 <bootloader_uart_read_data+0x8c>)
- 8000572:	f002 fdb4 	bl	80030de <HAL_UART_Receive>
+ 8000562:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
+ 8000566:	2201      	movs	r2, #1
+ 8000568:	491d      	ldr	r1, [pc, #116]	@ (80005e0 <bootloader_uart_read_data+0xac>)
+ 800056a:	481c      	ldr	r0, [pc, #112]	@ (80005dc <bootloader_uart_read_data+0xa8>)
+ 800056c:	f002 fdb7 	bl	80030de <HAL_UART_Receive>
 
         // 3. Alınan ilk byte'ı geri gönder (echo)
         //HAL_UART_Transmit(&huart3, bootloader_rx_data, 1, HAL_MAX_DELAY);
 
         // 4. İlk byte'ı uzunluk olarak kullan
         bl_rx_length = bootloader_rx_data[0];
- 8000576:	4b19      	ldr	r3, [pc, #100]	@ (80005dc <bootloader_uart_read_data+0x88>)
- 8000578:	781b      	ldrb	r3, [r3, #0]
- 800057a:	72fb      	strb	r3, [r7, #11]
+ 8000570:	4b1b      	ldr	r3, [pc, #108]	@ (80005e0 <bootloader_uart_read_data+0xac>)
+ 8000572:	781b      	ldrb	r3, [r3, #0]
+ 8000574:	71fb      	strb	r3, [r7, #7]
 
         // 5. bl_rx_length kadar veri al
         HAL_UART_Receive(&huart3, &bootloader_rx_data[1], bl_rx_length, HAL_MAX_DELAY);
- 800057c:	7afb      	ldrb	r3, [r7, #11]
- 800057e:	b29a      	uxth	r2, r3
- 8000580:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
- 8000584:	4917      	ldr	r1, [pc, #92]	@ (80005e4 <bootloader_uart_read_data+0x90>)
- 8000586:	4816      	ldr	r0, [pc, #88]	@ (80005e0 <bootloader_uart_read_data+0x8c>)
- 8000588:	f002 fda9 	bl	80030de <HAL_UART_Receive>
-
-
+ 8000576:	79fb      	ldrb	r3, [r7, #7]
+ 8000578:	b29a      	uxth	r2, r3
+ 800057a:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
+ 800057e:	4919      	ldr	r1, [pc, #100]	@ (80005e4 <bootloader_uart_read_data+0xb0>)
+ 8000580:	4816      	ldr	r0, [pc, #88]	@ (80005dc <bootloader_uart_read_data+0xa8>)
+ 8000582:	f002 fdac 	bl	80030de <HAL_UART_Receive>
 
         switch (bootloader_rx_data[1])
- 800058c:	4b13      	ldr	r3, [pc, #76]	@ (80005dc <bootloader_uart_read_data+0x88>)
- 800058e:	785b      	ldrb	r3, [r3, #1]
- 8000590:	2b51      	cmp	r3, #81	@ 0x51
- 8000592:	d002      	beq.n	800059a <bootloader_uart_read_data+0x46>
- 8000594:	2b52      	cmp	r3, #82	@ 0x52
- 8000596:	d00e      	beq.n	80005b6 <bootloader_uart_read_data+0x62>
- 8000598:	e011      	b.n	80005be <bootloader_uart_read_data+0x6a>
+ 8000586:	4b16      	ldr	r3, [pc, #88]	@ (80005e0 <bootloader_uart_read_data+0xac>)
+ 8000588:	785b      	ldrb	r3, [r3, #1]
+ 800058a:	2b51      	cmp	r3, #81	@ 0x51
+ 800058c:	d002      	beq.n	8000594 <bootloader_uart_read_data+0x60>
+ 800058e:	2b52      	cmp	r3, #82	@ 0x52
+ 8000590:	d00e      	beq.n	80005b0 <bootloader_uart_read_data+0x7c>
+ 8000592:	e011      	b.n	80005b8 <bootloader_uart_read_data+0x84>
         {
             case BL_GET_VER:
-            	for (int i = 0; i < bl_rx_length + 1; i++) {
- 800059a:	2300      	movs	r3, #0
- 800059c:	60fb      	str	r3, [r7, #12]
- 800059e:	e002      	b.n	80005a6 <bootloader_uart_read_data+0x52>
- 80005a0:	68fb      	ldr	r3, [r7, #12]
- 80005a2:	3301      	adds	r3, #1
- 80005a4:	60fb      	str	r3, [r7, #12]
- 80005a6:	7afb      	ldrb	r3, [r7, #11]
- 80005a8:	68fa      	ldr	r2, [r7, #12]
- 80005aa:	429a      	cmp	r2, r3
- 80005ac:	ddf8      	ble.n	80005a0 <bootloader_uart_read_data+0x4c>
-            	    //HAL_UART_Transmit(&huart3, &bootloader_rx_data[i], 1, HAL_MAX_DELAY);
-            	}
+                for (int i = 0; i < bl_rx_length + 1; i++) {
+ 8000594:	2300      	movs	r3, #0
+ 8000596:	60fb      	str	r3, [r7, #12]
+ 8000598:	e002      	b.n	80005a0 <bootloader_uart_read_data+0x6c>
+ 800059a:	68fb      	ldr	r3, [r7, #12]
+ 800059c:	3301      	adds	r3, #1
+ 800059e:	60fb      	str	r3, [r7, #12]
+ 80005a0:	79fb      	ldrb	r3, [r7, #7]
+ 80005a2:	68fa      	ldr	r2, [r7, #12]
+ 80005a4:	429a      	cmp	r2, r3
+ 80005a6:	ddf8      	ble.n	800059a <bootloader_uart_read_data+0x66>
+                    //HAL_UART_Transmit(&huart3, &bootloader_rx_data[i], 1, HAL_MAX_DELAY);
+                }
 
                 bootloader_get_version_cmd(bootloader_rx_data);
- 80005ae:	480b      	ldr	r0, [pc, #44]	@ (80005dc <bootloader_uart_read_data+0x88>)
- 80005b0:	f7ff fe6e 	bl	8000290 <bootloader_get_version_cmd>
+ 80005a8:	480d      	ldr	r0, [pc, #52]	@ (80005e0 <bootloader_uart_read_data+0xac>)
+ 80005aa:	f7ff fe71 	bl	8000290 <bootloader_get_version_cmd>
                 break;
- 80005b4:	e011      	b.n	80005da <bootloader_uart_read_data+0x86>
+ 80005ae:	e011      	b.n	80005d4 <bootloader_uart_read_data+0xa0>
+
             case BL_GET_HELP:
                 bootloader_get_help_cmd(bootloader_rx_data);
- 80005b6:	4809      	ldr	r0, [pc, #36]	@ (80005dc <bootloader_uart_read_data+0x88>)
- 80005b8:	f7ff fec6 	bl	8000348 <bootloader_get_help_cmd>
+ 80005b0:	480b      	ldr	r0, [pc, #44]	@ (80005e0 <bootloader_uart_read_data+0xac>)
+ 80005b2:	f7ff feb9 	bl	8000328 <bootloader_get_help_cmd>
                 break;
- 80005bc:	e00d      	b.n	80005da <bootloader_uart_read_data+0x86>
+ 80005b6:	e00d      	b.n	80005d4 <bootloader_uart_read_data+0xa0>
 
             default:
             {
                 char* unknown_cmd = "Bilinmeyen komut!\r\n";
- 80005be:	4b0a      	ldr	r3, [pc, #40]	@ (80005e8 <bootloader_uart_read_data+0x94>)
- 80005c0:	607b      	str	r3, [r7, #4]
+ 80005b8:	4b0b      	ldr	r3, [pc, #44]	@ (80005e8 <bootloader_uart_read_data+0xb4>)
+ 80005ba:	603b      	str	r3, [r7, #0]
                 HAL_UART_Transmit(&huart3, (uint8_t*)unknown_cmd, strlen(unknown_cmd), HAL_MAX_DELAY);
- 80005c2:	6878      	ldr	r0, [r7, #4]
- 80005c4:	f7ff fe0c 	bl	80001e0 <strlen>
- 80005c8:	4603      	mov	r3, r0
- 80005ca:	b29a      	uxth	r2, r3
- 80005cc:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
- 80005d0:	6879      	ldr	r1, [r7, #4]
- 80005d2:	4803      	ldr	r0, [pc, #12]	@ (80005e0 <bootloader_uart_read_data+0x8c>)
- 80005d4:	f002 fcfa 	bl	8002fcc <HAL_UART_Transmit>
+ 80005bc:	6838      	ldr	r0, [r7, #0]
+ 80005be:	f7ff fe0f 	bl	80001e0 <strlen>
+ 80005c2:	4603      	mov	r3, r0
+ 80005c4:	b29a      	uxth	r2, r3
+ 80005c6:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
+ 80005ca:	6839      	ldr	r1, [r7, #0]
+ 80005cc:	4803      	ldr	r0, [pc, #12]	@ (80005dc <bootloader_uart_read_data+0xa8>)
+ 80005ce:	f002 fcfd 	bl	8002fcc <HAL_UART_Transmit>
                 break;
- 80005d8:	bf00      	nop
+ 80005d2:	bf00      	nop
         memset(bootloader_rx_data, 0, BL_RX_DATA_LENGTH);
- 80005da:	e7c0      	b.n	800055e <bootloader_uart_read_data+0xa>
- 80005dc:	200001b0 	.word	0x200001b0
- 80005e0:	20000128 	.word	0x20000128
+ 80005d4:	e7c0      	b.n	8000558 <bootloader_uart_read_data+0x24>
+ 80005d6:	bf00      	nop
+ 80005d8:	08004468 	.word	0x08004468
+ 80005dc:	20000128 	.word	0x20000128
+ 80005e0:	200001b0 	.word	0x200001b0
  80005e4:	200001b1 	.word	0x200001b1
- 80005e8:	08004464 	.word	0x08004464
+ 80005e8:	08004470 	.word	0x08004470
 
 080005ec <bootloader_jump_to_user_application>:
-    }
 }
+
 
 
 
@@ -708,7 +712,7 @@ void bootloader_jump_to_user_application() {
 	//2- kullanıcı uygulamasına atlandığını ilet
 	print_message("BL DEBUG MSG: bootloader_jump_to_user_application called\n");
  80005f2:	480d      	ldr	r0, [pc, #52]	@ (8000628 <bootloader_jump_to_user_application+0x3c>)
- 80005f4:	f7ff ff8c 	bl	8000510 <print_message>
+ 80005f4:	f7ff ff7c 	bl	80004f0 <print_message>
 	//3- MSP'nin değerini tut
 	uint32_t MSP_value = *(volatile uint32_t*) FLASH_SECTOR_2_BASE_ADDRESS;
  80005f8:	4b0c      	ldr	r3, [pc, #48]	@ (800062c <bootloader_jump_to_user_application+0x40>)
@@ -724,7 +728,7 @@ void bootloader_jump_to_user_application() {
 	print_message("BL DEBUG MODE: MSP value: %#x\n", MSP_value);
  8000608:	68f9      	ldr	r1, [r7, #12]
  800060a:	480a      	ldr	r0, [pc, #40]	@ (8000634 <bootloader_jump_to_user_application+0x48>)
- 800060c:	f7ff ff80 	bl	8000510 <print_message>
+ 800060c:	f7ff ff70 	bl	80004f0 <print_message>
  8000610:	68fb      	ldr	r3, [r7, #12]
  8000612:	603b      	str	r3, [r7, #0]
   \details Assigns the given value to the Main Stack Pointer (MSP).
@@ -752,10 +756,10 @@ __STATIC_FORCEINLINE void __set_MSP(uint32_t topOfMainStack)
  8000622:	3710      	adds	r7, #16
  8000624:	46bd      	mov	sp, r7
  8000626:	bd80      	pop	{r7, pc}
- 8000628:	08004478 	.word	0x08004478
+ 8000628:	08004484 	.word	0x08004484
  800062c:	08008000 	.word	0x08008000
  8000630:	08008004 	.word	0x08008004
- 8000634:	080044b4 	.word	0x080044b4
+ 8000634:	080044c0 	.word	0x080044c0
 
 08000638 <main>:
 /**
@@ -805,14 +809,14 @@ int main(void)
 
 	  print_message("BL DEBUG MODE: Button is pressed go to BL mode\n");
  8000664:	480e      	ldr	r0, [pc, #56]	@ (80006a0 <main+0x68>)
- 8000666:	f7ff ff53 	bl	8000510 <print_message>
+ 8000666:	f7ff ff43 	bl	80004f0 <print_message>
 	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
  800066a:	2201      	movs	r2, #1
  800066c:	2120      	movs	r1, #32
  800066e:	f04f 4090 	mov.w	r0, #1207959552	@ 0x48000000
  8000672:	f000 ffd9 	bl	8001628 <HAL_GPIO_WritePin>
 	  bootloader_uart_read_data();
- 8000676:	f7ff ff6d 	bl	8000554 <bootloader_uart_read_data>
+ 8000676:	f7ff ff5d 	bl	8000534 <bootloader_uart_read_data>
  800067a:	e004      	b.n	8000686 <main+0x4e>
 
   }
@@ -820,7 +824,7 @@ int main(void)
 
 	  print_message("BL DEBUG MODE: Button is not pressed executing user application\n");
  800067c:	4809      	ldr	r0, [pc, #36]	@ (80006a4 <main+0x6c>)
- 800067e:	f7ff ff47 	bl	8000510 <print_message>
+ 800067e:	f7ff ff37 	bl	80004f0 <print_message>
 
 	  bootloader_jump_to_user_application();
  8000682:	f7ff ffb3 	bl	80005ec <bootloader_jump_to_user_application>
@@ -841,8 +845,8 @@ int main(void)
  8000698:	e7f5      	b.n	8000686 <main+0x4e>
  800069a:	bf00      	nop
  800069c:	48000800 	.word	0x48000800
- 80006a0:	080044d4 	.word	0x080044d4
- 80006a4:	08004504 	.word	0x08004504
+ 80006a0:	080044e0 	.word	0x080044e0
+ 80006a4:	08004510 	.word	0x08004510
 
 080006a8 <SystemClock_Config>:
 /**
@@ -1936,7 +1940,7 @@ LoopForever:
   ldr r1, =_edata
  8000bf0:	20000060 	.word	0x20000060
   ldr r2, =_sidata
- 8000bf4:	080045c4 	.word	0x080045c4
+ 8000bf4:	080045d0 	.word	0x080045d0
   ldr r2, =_sbss
  8000bf8:	20000060 	.word	0x20000060
   ldr r4, =_ebss
@@ -6076,7 +6080,7 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(RCC_ClkInitTypeDef  *RCC_ClkInitStruct, ui
  800299c:	bd80      	pop	{r7, pc}
  800299e:	bf00      	nop
  80029a0:	40021000 	.word	0x40021000
- 80029a4:	08004548 	.word	0x08004548
+ 80029a4:	08004554 	.word	0x08004554
  80029a8:	20000004 	.word	0x20000004
  80029ac:	20000008 	.word	0x20000008
 
@@ -6201,8 +6205,8 @@ uint32_t HAL_RCC_GetSysClockFreq(void)
  8002a46:	4770      	bx	lr
  8002a48:	40021000 	.word	0x40021000
  8002a4c:	007a1200 	.word	0x007a1200
- 8002a50:	08004560 	.word	0x08004560
- 8002a54:	08004570 	.word	0x08004570
+ 8002a50:	0800456c 	.word	0x0800456c
+ 8002a54:	0800457c 	.word	0x0800457c
 
 08002a58 <HAL_RCC_GetHCLKFreq>:
   * @note   The SystemCoreClock CMSIS variable is used to store System Clock Frequency 
@@ -6261,7 +6265,7 @@ uint32_t HAL_RCC_GetPCLK1Freq(void)
  8002aa8:	46bd      	mov	sp, r7
  8002aaa:	bd80      	pop	{r7, pc}
  8002aac:	40021000 	.word	0x40021000
- 8002ab0:	08004558 	.word	0x08004558
+ 8002ab0:	08004564 	.word	0x08004564
 
 08002ab4 <HAL_RCC_GetPCLK2Freq>:
   * @note   Each time PCLK2 changes, this function must be called to update the
@@ -6300,7 +6304,7 @@ uint32_t HAL_RCC_GetPCLK2Freq(void)
  8002aec:	46bd      	mov	sp, r7
  8002aee:	bd80      	pop	{r7, pc}
  8002af0:	40021000 	.word	0x40021000
- 8002af4:	08004558 	.word	0x08004558
+ 8002af4:	08004564 	.word	0x08004564
 
 08002af8 <HAL_RCCEx_PeriphCLKConfig>:
   *         When the TIMx clock source is PLL clock, so the TIMx clock is PLL clock x 2.
@@ -8992,10 +8996,10 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  8003ade:	4798      	blx	r3
  8003ae0:	3601      	adds	r6, #1
  8003ae2:	e7f2      	b.n	8003aca <__libc_init_array+0x1e>
- 8003ae4:	080045bc 	.word	0x080045bc
- 8003ae8:	080045bc 	.word	0x080045bc
- 8003aec:	080045bc 	.word	0x080045bc
- 8003af0:	080045c0 	.word	0x080045c0
+ 8003ae4:	080045c8 	.word	0x080045c8
+ 8003ae8:	080045c8 	.word	0x080045c8
+ 8003aec:	080045c8 	.word	0x080045c8
+ 8003af0:	080045cc 	.word	0x080045cc
 
 08003af4 <__retarget_lock_acquire_recursive>:
  8003af4:	4770      	bx	lr
@@ -9278,11 +9282,11 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  8003d8c:	4638      	mov	r0, r7
  8003d8e:	f000 f91b 	bl	8003fc8 <_printf_i>
  8003d92:	e7ed      	b.n	8003d70 <_svfiprintf_r+0x1c0>
- 8003d94:	08004580 	.word	0x08004580
- 8003d98:	0800458a 	.word	0x0800458a
+ 8003d94:	0800458c 	.word	0x0800458c
+ 8003d98:	08004596 	.word	0x08004596
  8003d9c:	00000000 	.word	0x00000000
  8003da0:	08003af9 	.word	0x08003af9
- 8003da4:	08004586 	.word	0x08004586
+ 8003da4:	08004592 	.word	0x08004592
 
 08003da8 <sbrk_aligned>:
  8003da8:	b570      	push	{r4, r5, r6, lr}
@@ -9751,8 +9755,8 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  80041f4:	2500      	movs	r5, #0
  80041f6:	f104 0619 	add.w	r6, r4, #25
  80041fa:	e7f5      	b.n	80041e8 <_printf_i+0x220>
- 80041fc:	08004591 	.word	0x08004591
- 8004200:	080045a2 	.word	0x080045a2
+ 80041fc:	0800459d 	.word	0x0800459d
+ 8004200:	080045ae 	.word	0x080045ae
 
 08004204 <__malloc_lock>:
  8004204:	4801      	ldr	r0, [pc, #4]	@ (800420c <__malloc_lock+0x8>)

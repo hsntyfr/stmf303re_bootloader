@@ -1,2 +1,4 @@
-/dev/tty.Bluetooth-Incoming-Port
-/dev/tty.debug-console
+/dev/cu.Bluetooth-Incoming-Port
+/dev/cu.debug-console
+/dev/cu.usbmodem1103
+/dev/cu.usbserial-110

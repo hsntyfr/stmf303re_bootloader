@@ -42,6 +42,7 @@
 /* Private variables ---------------------------------------------------------*/
 CRC_HandleTypeDef hcrc;
 
+
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
@@ -95,18 +96,24 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  uint8_t data8[] = {0x00, 0x00, 0x05, 0x51};
-  uint32_t data32 = 0;
-  uint32_t crc = 0;
+  //uint32_t data32[] = {0xA501FF22};
+  //uint32_t data32 = 0xA501FF22;
+  //uint8_t tx_buf[] = {0x22, 0xFF, 0x01, 0xA5};
+  //uint32_t tx_buf[] = {0x1A2B3C4D};
+  //uint8_t data[] = { 0x1A, 0x2B, 0x3C, 0x4D };
 
-  // 2 byte veriyi 32-bit'e yerleştir (LSB-first / little endian)
-  data32 |= data8[0];
-  data32 |= (data8[1] << 8);
-  data32 |= (data8[2] << 16);
-  data32 |= (data8[3] << 24);
 
-  // CRC hesapla
-  crc = HAL_CRC_Accumulate(&hcrc, &data32, 1);
+  //uint8_t tx_buf[] = {0xA5, 0x01, 0xFF, 0x22};
+  //uint8_t tx_buf[] = {0xD4, 0x58, 0xB2, 0x3C};
+  uint8_t data[2] = {0x05, 0x51};
+  uint32_t data32;
+
+  // Byte dizisini 32-bit hizalamak için padding yapılır:
+  data32 =  (uint32_t)data[0] << 16|
+           ((uint32_t)data[1] << 24);  // 0x00005105 olur (Little Endian)
+
+  __HAL_CRC_DR_RESET(&hcrc);  // CRC birimini sıfırla
+  uint32_t crc = HAL_CRC_Accumulate(&hcrc, &data32, 1);  // 1 x 32-bit word
 
   // UART ile gönder
   HAL_UART_Transmit(&huart1, (uint8_t *)&crc, 4, HAL_MAX_DELAY);

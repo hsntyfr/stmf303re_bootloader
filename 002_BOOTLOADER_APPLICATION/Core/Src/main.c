@@ -86,6 +86,9 @@ void print_message(char* format, ...){
 
 void bootloader_uart_read_data(void)
 {
+    // Fonksiyona girildiğinde mesaj gönder
+    char* giris_mesaji = "BLi\r\n";
+    HAL_UART_Transmit(&huart3, (uint8_t*)giris_mesaji, strlen(giris_mesaji), HAL_MAX_DELAY);
 
     uint8_t bl_rx_length = 0;
 
@@ -106,17 +109,16 @@ void bootloader_uart_read_data(void)
         // 5. bl_rx_length kadar veri al
         HAL_UART_Receive(&huart3, &bootloader_rx_data[1], bl_rx_length, HAL_MAX_DELAY);
 
-
-
         switch (bootloader_rx_data[1])
         {
             case BL_GET_VER:
-            	for (int i = 0; i < bl_rx_length + 1; i++) {
-            	    //HAL_UART_Transmit(&huart3, &bootloader_rx_data[i], 1, HAL_MAX_DELAY);
-            	}
+                for (int i = 0; i < bl_rx_length + 1; i++) {
+                    //HAL_UART_Transmit(&huart3, &bootloader_rx_data[i], 1, HAL_MAX_DELAY);
+                }
 
                 bootloader_get_version_cmd(bootloader_rx_data);
                 break;
+
             case BL_GET_HELP:
                 bootloader_get_help_cmd(bootloader_rx_data);
                 break;
@@ -130,6 +132,7 @@ void bootloader_uart_read_data(void)
         }
     }
 }
+
 
 
 
